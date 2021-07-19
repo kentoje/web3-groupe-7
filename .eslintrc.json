@@ -1,0 +1,20 @@
+{
+  "extends": "airbnb-base",
+  "rules": {
+    "arrow-parens": ["error", "always"],
+    "arrow-body-style": ["error", "as-needed"],
+    "no-confusing-arrow": ["error", { "allowParens": true }],
+    "prefer-destructuring": ["error", { "array": true, "object": true }, { "enforceForRenamedProperties": false }],
+    "padding-line-between-statements": [
+      "error",
+      { "blankLine": "always", "prev": "*", "next": "return" },
+      { "blankLine": "always", "prev": "const", "next": "block-like" },
+      { "blankLine": "always", "prev": "let", "next": "block-like" },
+      { "blankLine": "any", "prev": "const", "next": "return" },
+      { "blankLine": "any", "prev": "let", "next": "return" }
+    ],
+    "newline-per-chained-call": ["error", { "ignoreChainWithDepth": 2 }],
+    "brace-style": ["error", "1tbs"]
+  }
+}
+
