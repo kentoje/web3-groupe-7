@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const influxRouter = require('./src/routes/influxQuery');
 
@@ -5,6 +6,6 @@ const app = express();
 
 app.use('/influx', influxRouter);
 
-app.listen(8888, () => {
-  console.log('Listening on port 8888 at http://localhost:8888');
+app.listen(process.env.PORT, () => {
+  console.log(`Listening on port ${process.env.PORT} at http://localhost:${process.env.PORT}`);
 });
