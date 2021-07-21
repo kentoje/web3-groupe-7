@@ -77,8 +77,9 @@ const publishData = () => {
     };
   }));
 
-  publishableData.forEach((data) => {
-    client.publish(data.topic, data.message);
+  publishableData.forEach(({ topic, message }) => {
+    console.log(`Published: ${topic} -> ${message} at ${new Date()}`);
+    client.publish(topic, message);
   });
 };
 
