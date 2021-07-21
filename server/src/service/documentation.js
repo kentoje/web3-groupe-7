@@ -7,6 +7,8 @@ const getDocumentation = async (_, res) => {
   fs.readFile(`${path}/README.md`, 'utf8', (err, data) => {
     if (err) {
       res.send(`Code: ${err.code}`);
+
+      return;
     }
 
     res.send(marked(data));

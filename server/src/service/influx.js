@@ -26,9 +26,11 @@ const fetchAll = async (_, res) => {
       status: error.response.status,
       message: error.message,
     });
+
+    return;
   }
 
-  const arr = await (await csv().fromString(resolve.data)).map(keep(
+  const arr = (await csv().fromString(resolve.data)).map(keep(
     '_start',
     '_stop',
     '_time',
@@ -45,11 +47,22 @@ const fetchAll = async (_, res) => {
 };
 
 const fetchById = async (req, res) => {
+  if (!req.query.name) {
+    res.json({
+      status: 400,
+      message: 'You must provide a value to the \'name\' query parameter.',
+    });
+
+    return;
+  }
+
   if (!AREAS.includes(req.query.name)) {
     res.json({
       status: 400,
-      message: `The area ${req.query.name} does not exist.`,
+      message: `The area '${req.query.name}' does not exist.`,
     });
+
+    return;
   }
 
   const promise = axiosInstance({
@@ -63,9 +76,11 @@ const fetchById = async (req, res) => {
       status: error.response.status,
       message: error.message,
     });
+
+    return;
   }
 
-  const arr = await (await csv().fromString(resolve.data)).map(keep(
+  const arr = (await csv().fromString(resolve.data)).map(keep(
     '_start',
     '_stop',
     '_time',
