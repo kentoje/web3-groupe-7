@@ -1,6 +1,7 @@
 require('dotenv').config();
+require('module-alias/register');
 const express = require('express');
-const influxRouter = require('./src/routes/influxQuery');
+const influxRouter = require('@routes/influxQuery');
 
 const app = express();
 

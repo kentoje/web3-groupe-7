@@ -6,11 +6,18 @@
   "repository": "git@github.com:kentoje/web3-groupe-7.git",
   "author": "Kento Monthubert <k.monthubert@gmail.com>",
   "license": "MIT",
+  "_moduleAliases": {
+    "@config": "server/src/config",
+    "@lib": "server/src/lib",
+    "@routes": "server/src/routes",
+    "@service": "server/src/service"
+  },
   "dependencies": {
     "axios": "^0.21.1",
     "csvtojson": "^2.0.10",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
+    "module-alias": "^2.2.2",
     "mqtt": "^4.2.8"
   },
   "devDependencies": {

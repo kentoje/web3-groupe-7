@@ -11,6 +11,7 @@
       { "blankLine": "any", "prev": "const", "next": "return" },
       { "blankLine": "any", "prev": "let", "next": "return" }
     ],
+    "import/no-unresolved": "off",
     "import/prefer-default-export": "off",
     "newline-per-chained-call": ["error", { "ignoreChainWithDepth": 2 }],
     "brace-style": ["error", "1tbs"]

@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const { fetchAll } = require('../../service/influx');
+const { fetchAll } = require('@service/influx');
 
 const router = Router();
 
