@@ -4,6 +4,16 @@ const { keep } = require('@lib/format');
 const queries = require('@service/query');
 const axiosInstance = require('@config/axios');
 
+const keepFields = keep(
+  '_start',
+  '_stop',
+  '_time',
+  '_value',
+  '_measurement',
+  'nodeID',
+  'topic',
+);
+
 const AREAS = [
   'S_COULOIR',
   'S_VEIL',
@@ -30,15 +40,7 @@ const fetchAll = async (_, res) => {
     return;
   }
 
-  const arr = (await csv().fromString(resolve.data)).map(keep(
-    '_start',
-    '_stop',
-    '_time',
-    '_value',
-    '_measurement',
-    'nodeID',
-    'topic',
-  ));
+  const arr = (await csv().fromString(resolve.data)).map(keepFields);
 
   res.json({
     data: arr,
@@ -80,15 +82,7 @@ const fetchById = async (req, res) => {
     return;
   }
 
-  const arr = (await csv().fromString(resolve.data)).map(keep(
-    '_start',
-    '_stop',
-    '_time',
-    '_value',
-    '_measurement',
-    'nodeID',
-    'topic',
-  ));
+  const arr = (await csv().fromString(resolve.data)).map(keepFields);
 
   res.json({
     data: arr,
