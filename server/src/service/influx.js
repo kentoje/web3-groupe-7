@@ -12,6 +12,8 @@ const keepFields = keep(
   '_measurement',
   'nodeID',
   'topic',
+  'sensorId',
+  'isActive',
 );
 
 const AREAS = [
@@ -40,7 +42,7 @@ const fetchAll = async (_, res) => {
     return;
   }
 
-  const arr = (await csv().fromString(resolve.data)).map(keepFields);
+  const arr = (await csv({ checkType: true }).fromString(resolve.data)).map(keepFields);
 
   res.json({
     data: arr,
@@ -82,7 +84,7 @@ const fetchById = async (req, res) => {
     return;
   }
 
-  const arr = (await csv().fromString(resolve.data)).map(keepFields);
+  const arr = (await csv({ checkType: true }).fromString(resolve.data)).map(keepFields);
 
   res.json({
     data: arr,
