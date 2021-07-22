@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const { fetchAll, fetchById } = require('@service/influx');
+const { fetchAll, fetchFilter } = require('@service/influx');
 
 const router = Router();
 
@@ -8,7 +8,7 @@ router
   .get(fetchAll);
 
 router
-  .route('/area')
-  .get(fetchById);
+  .route('/filter')
+  .get(fetchFilter);
 
 module.exports = router;

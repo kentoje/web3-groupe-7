@@ -14,14 +14,14 @@ const queries = {
       }))
       |> last()
   `,
-  getById: (req) => `
+  getByArea: (req) => `
     import "regexp"
 
     from(bucket: "kento.monthubert's Bucket")
       |> range(start: -30d)
       |> filter(fn: (r) => r["_measurement"] == "Flexibility" or r["_measurement"] == "Luminosity" or r["_measurement"] == "Proximity")
       |> filter(fn: (r) => r["_field"] == "data_value")
-      |> filter(fn: (r) => r["nodeID"] == "${req.query.name}")
+      |> filter(fn: (r) => r["nodeID"] == "${req.query.area}")
       |> map(fn: (r) => ({ r with
         sensorId: string(v: regexp.splitRegexp(r: /\\//, v: r["topic"], i: -1)[2]),
         isActive: if r["_measurement"] == "Luminosity" and r["_value"] > 195000 then true
@@ -29,6 +29,39 @@ const queries = {
           else false
       }))
       |> last()
+  `,
+  getAllSortByDate: (req) => `
+    import "regexp"
+
+    from(bucket: "kento.monthubert's Bucket")
+      |> range(start: -30d)
+      |> filter(fn: (r) => r["_measurement"] == "Flexibility" or r["_measurement"] == "Luminosity" or r["_measurement"] == "Proximity")
+      |> filter(fn: (r) => r["_field"] == "data_value")
+      |> map(fn: (r) => ({ r with
+          sensorId: string(v: regexp.splitRegexp(r: /\\//, v: r["topic"], i: -1)[2]),
+          isActive: if r["_measurement"] == "Luminosity" and r["_value"] > 195000 then true
+            else if r["_value"] == 1 then true
+            else false
+      }))
+      |> group(columns: ["${req.query.groupBy}"], mode:"by")
+      |> sort(columns: ["${req.query.sortBy}"], desc: ${req.query.desc || 'true'})
+  `,
+  getBySensorAndArea: (req) => `
+    import "regexp"
+
+    from(bucket: "kento.monthubert's Bucket")
+      |> range(start: -30d)
+      |> filter(fn: (r) => r["_measurement"] == "${req.query.sensor}")
+      |> filter(fn: (r) => r["nodeID"] == "${req.query.area}")
+      |> filter(fn: (r) => r["_field"] == "data_value")
+      |> map(fn: (r) => ({ r with
+        sensorId: string(v: regexp.splitRegexp(r: /\\//, v: r["topic"], i: -1)[2]),
+        isActive: if r["_measurement"] == "${req.query.sensor}" and r["_value"] > 195000 then true
+          else if r["_measurement"] == "${req.query.sensor}" and r["_value"] == 1 then true
+          else if r["_measurement"] == "${req.query.sensor}" and r["_value"] == 1 then true
+          else false
+      }))
+      |> sort(columns: ["${req.query.sortBy}"], desc: ${req.query.desc || 'true'})
   `,
 };
 

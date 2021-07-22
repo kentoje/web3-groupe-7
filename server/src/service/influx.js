@@ -3,28 +3,49 @@ const { enhancedPromiseHandler } = require('@lib/handler');
 const { keep } = require('@lib/format');
 const queries = require('@service/query');
 const axiosInstance = require('@config/axios');
+const { FORMAT_FIELDS, QUERY_PARAMETERS } = require('@lib/constants');
+const { sortByStr, isDeeplyEqual } = require('@lib/string');
+const validatorsObj = require('@service/validators');
 
-const keepFields = keep(
-  '_start',
-  '_stop',
-  '_time',
-  '_value',
-  '_measurement',
-  'nodeID',
-  'topic',
-  'sensorId',
-  'isActive',
-);
-
-const AREAS = [
-  'S_COULOIR',
-  'S_VEIL',
-  'S_ALLAIS',
-  'S_DELBO',
-  'S_FORMATION_CONTINUE',
-  'S_OMNISPORT',
-  'S_GYMNASE',
+const scenarios = [
+  {
+    queryParams: QUERY_PARAMETERS.byArea,
+    query: (req) => queries.getByArea(req),
+    validators: Object.entries(validatorsObj)
+      .reduce((accu, [key, fn]) => (
+        QUERY_PARAMETERS.byArea.includes(key) ? { ...accu, [key]: fn } : { ...accu }
+      ), {}),
+  },
+  {
+    queryParams: QUERY_PARAMETERS.allSortByDate,
+    query: (req) => queries.getAllSortByDate(req),
+    validators: Object.entries(validatorsObj)
+      .reduce((accu, [key, fn]) => (
+        [
+          ...QUERY_PARAMETERS.allSortByDate,
+          'desc',
+        ].includes(key) ? { ...accu, [key]: fn } : { ...accu }
+      ), {}),
+  },
+  {
+    queryParams: QUERY_PARAMETERS.oneBySensorAndArea,
+    query: (req) => queries.getBySensorAndArea(req),
+    validators: Object.entries(validatorsObj)
+      .reduce((accu, [key, fn]) => (
+        [
+          ...QUERY_PARAMETERS.oneBySensorAndArea,
+          'desc',
+        ].includes(key) ? { ...accu, [key]: fn } : { ...accu }
+      ), {}),
+  },
 ];
+
+const pickScenario = (req) => scenarios.find((scenario) => (
+  isDeeplyEqual(
+    sortByStr(scenario.queryParams),
+    sortByStr(Object.keys(req.query).filter((key) => key !== 'desc')),
+  )
+));
 
 const fetchAll = async (_, res) => {
   const promise = axiosInstance({
@@ -42,7 +63,7 @@ const fetchAll = async (_, res) => {
     return;
   }
 
-  const arr = (await csv({ checkType: true }).fromString(resolve.data)).map(keepFields);
+  const arr = (await csv({ checkType: true }).fromString(resolve.data)).map(keep(...FORMAT_FIELDS));
 
   res.json({
     data: arr,
@@ -50,20 +71,17 @@ const fetchAll = async (_, res) => {
   });
 };
 
-const fetchById = async (req, res) => {
-  if (!req.query.name) {
+const fetchFilter = async (req, res) => {
+  const { query, validators } = pickScenario(req);
+
+  const arrErrors = Object.entries(req.query)
+    .map(([key, value]) => validators[key](value))
+    .filter(Boolean);
+
+  if (arrErrors.length) {
     res.json({
       status: 400,
-      message: 'You must provide a value to the \'name\' query parameter.',
-    });
-
-    return;
-  }
-
-  if (!AREAS.includes(req.query.name)) {
-    res.json({
-      status: 400,
-      message: `The area '${req.query.name}' does not exist.`,
+      messages: arrErrors.map((error) => error.message.replace(/\n/gi, ' ').trim()),
     });
 
     return;
@@ -71,7 +89,7 @@ const fetchById = async (req, res) => {
 
   const promise = axiosInstance({
     method: 'post',
-    data: queries.getById(req),
+    data: query(req),
   });
 
   const [error, resolve] = await enhancedPromiseHandler(promise);
@@ -84,7 +102,7 @@ const fetchById = async (req, res) => {
     return;
   }
 
-  const arr = (await csv({ checkType: true }).fromString(resolve.data)).map(keepFields);
+  const arr = (await csv({ checkType: true }).fromString(resolve.data)).map(keep(...FORMAT_FIELDS));
 
   res.json({
     data: arr,
@@ -94,5 +112,5 @@ const fetchById = async (req, res) => {
 
 module.exports = {
   fetchAll,
-  fetchById,
+  fetchFilter,
 };
