@@ -3,6 +3,9 @@ require('module-alias/register');
 const express = require('express');
 const influxRouter = require('@routes/influxQuery');
 const root = require('@routes/root');
+const { connect } = require('@config/database');
+
+connect();
 
 const app = express();
 
