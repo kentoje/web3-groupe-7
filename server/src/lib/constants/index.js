@@ -24,15 +24,8 @@ const SENSORS = [
   'Luminosity',
 ];
 
-const QUERY_PARAMETERS = {
-  byArea: ['area'],
-  allSortByDate: ['groupBy', 'sortBy'],
-  oneBySensorAndArea: ['area', 'sensor', 'sortBy'],
-};
-
 module.exports = {
   AREAS,
   FORMAT_FIELDS,
   SENSORS,
-  QUERY_PARAMETERS,
 };

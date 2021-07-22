@@ -3,7 +3,8 @@ const { enhancedPromiseHandler } = require('@lib/handler');
 const { keep } = require('@lib/format');
 const queries = require('@service/query');
 const axiosInstance = require('@config/axios');
-const { FORMAT_FIELDS, QUERY_PARAMETERS } = require('@lib/constants');
+const { FORMAT_FIELDS } = require('@lib/constants');
+const { QUERY_PARAMETERS, POSSIBLE_COMBINATIONS } = require('@lib/constants/filter');
 const { sortByStr, isDeeplyEqual } = require('@lib/string');
 const validatorsObj = require('@service/validators');
 
@@ -72,6 +73,20 @@ const fetchAll = async (_, res) => {
 };
 
 const fetchFilter = async (req, res) => {
+  if (
+    !POSSIBLE_COMBINATIONS
+      .map(sortByStr)
+      .some((arr) => isDeeplyEqual(arr, sortByStr(Object.keys(req.query))))
+  ) {
+    res.json({
+      status: 400,
+      message: 'This query parameters combination is not allowed.',
+      allowedCombinations: POSSIBLE_COMBINATIONS,
+    });
+
+    return;
+  }
+
   const { query, validators } = pickScenario(req);
 
   const arrErrors = Object.entries(req.query)
