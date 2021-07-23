@@ -4,11 +4,13 @@ const express = require('express');
 const influxRouter = require('@routes/influxQuery');
 const root = require('@routes/root');
 const { connect } = require('@config/database');
+const cors = require('cors');
 
 connect();
 
 const app = express();
 
+app.use(cors());
 app.use('/', root);
 app.use('/api/influx', influxRouter);
 

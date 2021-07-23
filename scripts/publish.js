@@ -113,4 +113,4 @@ const run = (time = secondInMilliseconds(10)) => {
   }, time);
 };
 
-run(secondInMilliseconds(10));
+run(secondInMilliseconds(120));

@@ -23,13 +23,19 @@
 
 ```js
 const AREAS = [
-  'S_COULOIR',
-  'S_VEIL',
-  'S_ALLAIS',
-  'S_DELBO',
-  'S_FORMATION_CONTINUE',
-  'S_OMNISPORT',
-  'S_GYMNASE',
+  'TERASSE',
+  'EPHEMERE',
+  'GRAPPIN',
+  'ZAZZO',
+  'CENTRE_SPORTIF',
+  'BU',
+  'LEFEBVRE_ROUCH',
+  'LA_COMTEMPORAINE',
+  'MAISON_DE_L_ETUDIANT',
+  'RESTO_CROUS',
+  'VEIL',
+  'OMNISPORT',
+  'GYMNASE',
 ];
 ```
 
