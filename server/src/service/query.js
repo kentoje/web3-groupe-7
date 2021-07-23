@@ -66,6 +66,7 @@ const queries = {
           else false
       }))
       |> sort(columns: ["${req.query.sortBy}"], desc: ${req.query.desc || 'true'})
+      |> limit(n: 5)
   `,
 };
 

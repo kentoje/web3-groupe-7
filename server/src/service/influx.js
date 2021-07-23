@@ -7,7 +7,7 @@ const { FORMAT_FIELDS } = require('@lib/constants');
 const { QUERY_PARAMETERS, POSSIBLE_COMBINATIONS } = require('@lib/constants/filter');
 const { sortByStr, isDeeplyEqual } = require('@lib/string');
 const validatorsObj = require('@service/validators');
-const { coordinates, pickCoordinates } = require('@lib/mocks/coordinates');
+const { pickCoordinates } = require('@lib/mocks/coordinates');
 
 const scenarios = [
   {
