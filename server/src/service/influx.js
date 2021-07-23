@@ -7,6 +7,7 @@ const { FORMAT_FIELDS } = require('@lib/constants');
 const { QUERY_PARAMETERS, POSSIBLE_COMBINATIONS } = require('@lib/constants/filter');
 const { sortByStr, isDeeplyEqual } = require('@lib/string');
 const validatorsObj = require('@service/validators');
+const { coordinates, pickCoordinates } = require('@lib/mocks/coordinates');
 
 const scenarios = [
   {
@@ -67,7 +68,10 @@ const fetchAll = async (_, res) => {
   const arr = (await csv({ checkType: true }).fromString(resolve.data)).map(keep(...FORMAT_FIELDS));
 
   res.json({
-    data: arr,
+    data: arr.map((node) => ({
+      ...node,
+      coordinates: pickCoordinates(node.topic),
+    })),
     status: 200,
   });
 };
