@@ -12,12 +12,12 @@
     "@models": "server/src/models",
     "@lib": "server/src/lib",
     "@routes": "server/src/routes",
-    "@service": "server/src/service"
+    "@service": "server/src/service",
+    "@middlewares": "server/src/middlewares"
   },
   "dependencies": {
     "axios": "^0.21.1",
     "bcryptjs": "^2.4.3",
-    "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "csvtojson": "^2.0.10",
     "dotenv": "^10.0.0",
