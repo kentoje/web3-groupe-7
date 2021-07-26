@@ -5,28 +5,28 @@ const detailsSchema = new mongoose.Schema({
     type: String,
     required: false,
     trim: true,
-    default: "DAAF",
+    default: 'DAAF',
   },
   class: {
     type: String,
     required: false,
     trim: true,
-    default: "Marquage CE"
+    default: 'Marquage CE',
   },
   usage: {
     type: String,
     required: false,
     trim: true,
-    default: "Tous les feux"
+    default: 'Tous les feux',
   },
-})
+});
 
 const smokeDetectorSchema = new mongoose.Schema({
   topic: {
     type: String,
     required: true,
     trim: true,
-    default: "topic",
+    default: 'topic',
   },
   lastModified: {
     type: Date,
@@ -42,4 +42,4 @@ const smokeDetectorSchema = new mongoose.Schema({
   },
 });
 
-module.exports = mongoose.model("SmokeDetector", smokeDetectorSchema)
+module.exports = mongoose.model('SmokeDetector', smokeDetectorSchema);

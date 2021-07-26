@@ -4,7 +4,7 @@ const queries = {
 
     from(bucket: "kento.monthubert's Bucket")
       |> range(start: -30d)
-      |> filter(fn: (r) => r["_measurement"] == "Flexibility" or r["_measurement"] == "Luminosity" or r["_measurement"] == "Proximity")
+      |> filter(fn: (r) => r["_measurement"] == "Flexibility" or r["_measurement"] == "Luminosity")
       |> filter(fn: (r) => r["_field"] == "data_value")
       |> map(fn: (r) => ({ r with
         sensorId: string(v: regexp.splitRegexp(r: /\\//, v: r["topic"], i: -1)[2]),

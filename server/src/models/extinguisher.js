@@ -17,7 +17,7 @@ const detailsSchema = new mongoose.Schema({
     type: String,
     required: false,
     trim: true,
-    default: "Feux d'origine électrique",
+    default: 'Feux d\'origine électrique',
   },
 });
 
@@ -28,7 +28,7 @@ const extinguisherSchema = new mongoose.Schema({
     trim: true,
     default: '',
   },
-  modified: {
+  lastModified: {
     type: Date,
     default: Date.now(),
   },
