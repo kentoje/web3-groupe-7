@@ -1,14 +1,27 @@
 const { Router } = require('express');
-const { fetchAll, fetchOne } = require('@service/database');
+const {
+  fetchAllDetectors,
+  fetchAllExtinguishers,
+  fetchOneDetector,
+  fetchOneExtinguisher,
+} = require('@service/database');
 
 const router = Router();
 
 router
-  .route('/all')
-  .get(fetchAll);
+  .route('/extinguishers')
+  .get(fetchAllExtinguishers);
 
 router
-  .route('/:topic')
-  .get(fetchOne);
+  .route('/extinguisher/:nodeId/:sensorId')
+  .get(fetchOneExtinguisher);
+
+router
+  .route('/detectors')
+  .get(fetchAllDetectors);
+
+router
+  .route('/detector/:nodeId/:sensorId')
+  .get(fetchOneDetector);
 
 module.exports = router;

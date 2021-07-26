@@ -5,28 +5,28 @@ const detailsSchema = new mongoose.Schema({
     type: String,
     required: false,
     trim: true,
-    default: "CO2",
+    default: 'CO2',
   },
   class: {
     type: String,
     required: false,
-    trime: true,
-    default: "AB"
+    trim: true,
+    default: 'AB',
   },
   usage: {
     type: String,
     required: false,
     trim: true,
-    default: "Feux d'origine électrique"
+    default: "Feux d'origine électrique",
   },
-})
+});
 
 const extinguisherSchema = new mongoose.Schema({
   topic: {
     type: String,
     required: true,
     trim: true,
-    default: ""
+    default: '',
   },
   modified: {
     type: Date,
@@ -42,4 +42,4 @@ const extinguisherSchema = new mongoose.Schema({
   },
 });
 
-module.exports = mongoose.models?.Extinguisher || mongoose.model('Extinguisher', extinguisherSchema)
+module.exports = mongoose.model('Extinguisher', extinguisherSchema);

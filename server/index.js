@@ -12,7 +12,7 @@ const app = express();
 app.use(cors());
 app.use('/', root);
 app.use('/api/influx', influxRouter);
-app.use('/api/database', connect(databaseRouter));
+app.use('/api/details', connect(databaseRouter));
 
 app.listen(process.env.PORT, () => {
   console.log(`Listening on port ${process.env.PORT} at http://localhost:${process.env.PORT}`);
