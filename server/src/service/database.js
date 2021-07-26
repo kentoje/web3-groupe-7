@@ -5,7 +5,7 @@ const { enhancedPromiseHandler } = require('@lib/handler');
 const fetchAllExtinguishers = async (_, res) => {
   const [error, extinguishers] = await enhancedPromiseHandler(Extinguisher.find().lean());
   if (error) {
-    res.json({
+    res.status(500).json({
       status: 500,
       message: error.message,
     });
@@ -13,7 +13,7 @@ const fetchAllExtinguishers = async (_, res) => {
     return;
   }
 
-  res.json({
+  res.status(200).json({
     data: extinguishers,
     status: 200,
   });
@@ -22,7 +22,7 @@ const fetchAllExtinguishers = async (_, res) => {
 const fetchAllDetectors = async (_, res) => {
   const [error, detectors] = await enhancedPromiseHandler(SmokeDetector.find().lean());
   if (error) {
-    res.json({
+    res.status(500).json({
       status: 500,
       message: error.message,
     });
@@ -30,7 +30,7 @@ const fetchAllDetectors = async (_, res) => {
     return;
   }
 
-  res.json({
+  res.status(200).json({
     data: detectors,
     status: 200,
   });
@@ -40,7 +40,7 @@ const fetchOneExtinguisher = async (req, res) => {
   const { nodeId, sensorId } = req.params;
   const [error, extinguisher] = await enhancedPromiseHandler(Extinguisher.find({ topic: `WEB3-GROUPE7/${nodeId}/${sensorId}` }).lean());
   if (error) {
-    res.json({
+    res.status(500).json({
       status: 500,
       message: error.message,
     });
@@ -48,7 +48,7 @@ const fetchOneExtinguisher = async (req, res) => {
     return;
   }
 
-  res.json({
+  res.status(200).json({
     data: extinguisher,
     status: 200,
   });
@@ -58,7 +58,7 @@ const fetchOneDetector = async (req, res) => {
   const { nodeId, sensorId } = req.params;
   const [error, detector] = await enhancedPromiseHandler(SmokeDetector.find({ topic: `WEB3-GROUPE7/${nodeId}/${sensorId}` }).lean());
   if (error) {
-    res.json({
+    res.status(500).json({
       status: 500,
       message: error.message,
     });
@@ -66,7 +66,7 @@ const fetchOneDetector = async (req, res) => {
     return;
   }
 
-  res.json({
+  res.status(200).json({
     data: detector,
     status: 200,
   });
