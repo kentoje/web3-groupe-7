@@ -13,8 +13,8 @@
     ],
     "import/no-unresolved": "off",
     "import/prefer-default-export": "off",
+    "prefer-promise-reject-errors": "off",
     "newline-per-chained-call": ["error", { "ignoreChainWithDepth": 2 }],
     "brace-style": ["error", "1tbs"]
   }
 }
-
