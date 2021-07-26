@@ -60,7 +60,7 @@ const fetchAll = async (_, res) => {
     res.status(Number(error.response.status).json({
       status: error.response.status,
       message: error.message,
-    });
+    }));
 
     return;
   }
