@@ -1,9 +1,7 @@
 const fs = require('fs');
 const marked = require('marked');
-const Extinguisher = require('@lib/models/extinguisher');
-const SmokeDetector = require('@lib/models/smokedetector');
 
-const getDocumentation = async (_, res) => {
+const getDocumentation = (_, res) => {
   const [path] = __dirname.split('/server');
 
   fs.readFile(`${path}/README.md`, 'utf8', (err, data) => {

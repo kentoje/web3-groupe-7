@@ -8,8 +8,10 @@
 | `/api/influx/filter?area={area}`                                          | GET All data of sensors from a given area.                                                                                          |
 | `/api/influx/filter?groupBy={field}&sortBy={field}&desc={bool}`           | GET All, group data by given field, and sort by given field. Desc is `true` by default, it can be omitted.                          |
 | `/api/influx/filter?area={area}&sensor={sensor}&sortBy={field}&desc=true` | GET All data from a given sensor and a given area. Sort the result by the given field. Desc is `true` by default, it can be omitted |
-| `/api/database`                                                           | GET All objects in database.                                                                                                        |
-| `/api/database/:topic`                                                    | GET One object by topic name                                                                                                            |
+| `/api/details/detectors`                                                  | GET All detectors in database.                                                                                                      |
+| `/api/details/detector/:nodeId/:sensorId`                                 | GET One detector by nodeId & sensorId (121)                                                                                         |
+| `/api/details/extinguishers`                                              | GET All extinguishers in database.                                                                                                  |
+| `/api/details/extinguisher/:nodeId/:sensorId`                             | GET One extinguisher by nodeId & sensorId (119 only)                                                                                |
 
 ## ENV
 
@@ -44,19 +46,19 @@ const AREAS = [
 ### Sensors
 
 ```js
-const SENSORS = ["Flexibility", "Proximity", "Luminosity"];
+const SENSORS = ['Flexibility', 'Proximity', 'Luminosity'];
 ```
 
 ### Format fields
 
 ```js
 const FORMAT_FIELDS = [
-  "_time",
-  "_value",
-  "_measurement",
-  "nodeID",
-  "topic",
-  "sensorId",
-  "isActive",
+  '_time',
+  '_value',
+  '_measurement',
+  'nodeID',
+  'topic',
+  'sensorId',
+  'isActive',
 ];
 ```

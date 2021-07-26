@@ -10,14 +10,14 @@ const detailsSchema = new mongoose.Schema({
   class: {
     type: String,
     required: false,
-    trime: true,
+    trim: true,
     default: "Marquage CE"
   },
   usage: {
     type: String,
     required: false,
     trim: true,
-    default: "Tout les feux"
+    default: "Tous les feux"
   },
 })
 
@@ -42,4 +42,4 @@ const smokeDetectorSchema = new mongoose.Schema({
   },
 });
 
-module.exports = mongoose.models?.SmokeDetector || mongoose.model("SmokeDetector", smokeDetectorSchema)
+module.exports = mongoose.model("SmokeDetector", smokeDetectorSchema)

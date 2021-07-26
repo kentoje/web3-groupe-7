@@ -1,22 +1,80 @@
 const Extinguisher = require('@lib/models/extinguisher');
 const SmokeDetector = require('@lib/models/smokedetector');
+const { enhancedPromiseHandler } = require('@lib/handler');
 
-const fetchAll = async (req, res) => {
-  const Extinguishers = await Extinguisher.find().exec();
-  const smokeDetectors = await SmokeDetector.find().exec();
-  res.send({ Extinguishers, smokeDetectors });
+const fetchAllExtinguishers = async (req, res) => {
+  const [error, extinguishers] = await enhancedPromiseHandler(Extinguisher.find().lean());
+  if (error) {
+    res.json({
+      status: 500,
+      message: error.message,
+    });
+
+    return;
+  }
+
+  res.json({
+    data: extinguishers,
+    status: 200,
+  });
 };
 
-const fetchOne = async (req, res) => {
-  const { topic } = req.params;
-  const item = await Promise.all([
-    Extinguisher.find({ topic }),
-    SmokeDetector.find({ topic }),
-  ]);
-  res.send(item.flat());
+const fetchAllDetectors = async (req, res) => {
+  const [error, detectors] = await enhancedPromiseHandler(SmokeDetector.find().lean());
+  if (error) {
+    res.json({
+      status: 500,
+      message: error.message,
+    });
+
+    return;
+  }
+
+  res.json({
+    data: detectors,
+    status: 200,
+  });
+};
+
+const fetchOneExtinguisher = async (req, res) => {
+  const { nodeId, sensorId } = req.params;
+  const [error, extinguisher] = await enhancedPromiseHandler(Extinguisher.find({ topic: `WEB3-GROUPE7/${nodeId}/${sensorId}` }).lean());
+  if (error) {
+    res.json({
+      status: 500,
+      message: error.message,
+    });
+
+    return;
+  }
+
+  res.json({
+    data: extinguisher,
+    status: 200,
+  });
+};
+
+const fetchOneDetector = async (req, res) => {
+  const { nodeId, sensorId } = req.params;
+  const [error, detector] = await enhancedPromiseHandler(SmokeDetector.find({ topic: `WEB3-GROUPE7/${nodeId}/${sensorId}` }).lean());
+  if (error) {
+    res.json({
+      status: 500,
+      message: error.message,
+    });
+
+    return;
+  }
+
+  res.json({
+    data: detector,
+    status: 200,
+  });
 };
 
 module.exports = {
-  fetchAll,
-  fetchOne,
+  fetchAllDetectors,
+  fetchAllExtinguishers,
+  fetchOneDetector,
+  fetchOneExtinguisher,
 };
