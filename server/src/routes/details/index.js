@@ -13,7 +13,7 @@ router
   .get(fetchAllExtinguishers);
 
 router
-  .route('/extinguisher/:nodeId/:sensorId')
+  .route('/extinguisher/:nodeId')
   .get(fetchOneExtinguisher);
 
 router
@@ -21,7 +21,7 @@ router
   .get(fetchAllDetectors);
 
 router
-  .route('/detector/:nodeId/:sensorId')
+  .route('/detector/:nodeId')
   .get(fetchOneDetector);
 
 router

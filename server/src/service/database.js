@@ -37,8 +37,8 @@ const fetchAllDetectors = async (_, res) => {
 };
 
 const fetchOneExtinguisher = async (req, res) => {
-  const { nodeId, sensorId } = req.params;
-  const [error, extinguisher] = await enhancedPromiseHandler(Extinguisher.find({ topic: `WEB3-GROUPE7/${nodeId}/${sensorId}` }).lean());
+  const { nodeId } = req.params;
+  const [error, extinguisher] = await enhancedPromiseHandler(Extinguisher.findOne({ topic: `WEB3-GROUPE7/${nodeId}/119` }).lean());
   if (error) {
     res.status(500).json({
       status: 500,
@@ -55,8 +55,8 @@ const fetchOneExtinguisher = async (req, res) => {
 };
 
 const fetchOneDetector = async (req, res) => {
-  const { nodeId, sensorId } = req.params;
-  const [error, detector] = await enhancedPromiseHandler(SmokeDetector.find({ topic: `WEB3-GROUPE7/${nodeId}/${sensorId}` }).lean());
+  const { nodeId } = req.params;
+  const [error, detector] = await enhancedPromiseHandler(SmokeDetector.findOne({ topic: `WEB3-GROUPE7/${nodeId}/121` }).lean());
   if (error) {
     res.status(500).json({
       status: 500,

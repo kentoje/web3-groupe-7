@@ -11,7 +11,6 @@ router
   .route('/register')
   .post(register);
 
-
 router
   .route('*')
   .get((_, res) => {
