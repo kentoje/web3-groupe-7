@@ -1,8 +1,8 @@
-const Extinguisher = require('@lib/models/extinguisher');
-const SmokeDetector = require('@lib/models/smokedetector');
+const Extinguisher = require('@models/extinguisher');
+const SmokeDetector = require('@models/smokeDetector');
 const { enhancedPromiseHandler } = require('@lib/handler');
 
-const fetchAllExtinguishers = async (req, res) => {
+const fetchAllExtinguishers = async (_, res) => {
   const [error, extinguishers] = await enhancedPromiseHandler(Extinguisher.find().lean());
   if (error) {
     res.json({
@@ -19,7 +19,7 @@ const fetchAllExtinguishers = async (req, res) => {
   });
 };
 
-const fetchAllDetectors = async (req, res) => {
+const fetchAllDetectors = async (_, res) => {
   const [error, detectors] = await enhancedPromiseHandler(SmokeDetector.find().lean());
   if (error) {
     res.json({

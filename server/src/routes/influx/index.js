@@ -11,4 +11,10 @@ router
   .route('/filter')
   .get(fetchFilter);
 
+router
+  .route('*')
+  .get((_, res) => {
+    res.redirect(301, '/api/');
+  });
+
 module.exports = router;

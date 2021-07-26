@@ -24,4 +24,10 @@ router
   .route('/detector/:nodeId/:sensorId')
   .get(fetchOneDetector);
 
+router
+  .route('*')
+  .get((_, res) => {
+    res.redirect(301, '/api/');
+  });
+
 module.exports = router;

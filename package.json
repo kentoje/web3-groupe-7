@@ -9,6 +9,7 @@
   "_moduleAliases": {
     "@root": ".",
     "@config": "server/src/config",
+    "@models": "server/src/models",
     "@lib": "server/src/lib",
     "@routes": "server/src/routes",
     "@service": "server/src/service"
