@@ -9,36 +9,28 @@ const { sortByStr, isDeeplyEqual } = require('@lib/string');
 const validatorsObj = require('@service/validators');
 const { pickCoordinates } = require('@lib/mocks/coordinates');
 
+const includeValidator = (parameters) => (accu, [key, fn]) => (
+  parameters.includes(key) ? { ...accu, [key]: fn } : { ...accu }
+);
+
 const scenarios = [
   {
     queryParams: QUERY_PARAMETERS.byArea,
     query: (req) => queries.getByArea(req),
     validators: Object.entries(validatorsObj)
-      .reduce((accu, [key, fn]) => (
-        QUERY_PARAMETERS.byArea.includes(key) ? { ...accu, [key]: fn } : { ...accu }
-      ), {}),
+      .reduce(includeValidator(QUERY_PARAMETERS.byArea), {}),
   },
   {
     queryParams: QUERY_PARAMETERS.allSortByDate,
     query: (req) => queries.getAllSortByDate(req),
     validators: Object.entries(validatorsObj)
-      .reduce((accu, [key, fn]) => (
-        [
-          ...QUERY_PARAMETERS.allSortByDate,
-          'desc',
-        ].includes(key) ? { ...accu, [key]: fn } : { ...accu }
-      ), {}),
+      .reduce(includeValidator([...QUERY_PARAMETERS.allSortByDate, 'desc']), {}),
   },
   {
     queryParams: QUERY_PARAMETERS.oneBySensorAndArea,
     query: (req) => queries.getBySensorAndArea(req),
     validators: Object.entries(validatorsObj)
-      .reduce((accu, [key, fn]) => (
-        [
-          ...QUERY_PARAMETERS.oneBySensorAndArea,
-          'desc',
-        ].includes(key) ? { ...accu, [key]: fn } : { ...accu }
-      ), {}),
+      .reduce(includeValidator([...QUERY_PARAMETERS.oneBySensorAndArea, 'desc']), {}),
   },
 ];
 
