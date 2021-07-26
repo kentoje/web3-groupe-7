@@ -57,7 +57,7 @@ const fetchAll = async (_, res) => {
 
   const [error, resolve] = await enhancedPromiseHandler(promise);
   if (error) {
-    res.json({
+    res.status(Number(error.response.status).json({
       status: error.response.status,
       message: error.message,
     });
@@ -67,7 +67,7 @@ const fetchAll = async (_, res) => {
 
   const arr = (await csv({ checkType: true }).fromString(resolve.data)).map(keep(...FORMAT_FIELDS));
 
-  res.json({
+  res.status(200).json({
     data: arr.map((node) => ({
       ...node,
       coordinates: pickCoordinates(node.topic),
@@ -82,7 +82,7 @@ const fetchFilter = async (req, res) => {
       .map(sortByStr)
       .some((arr) => isDeeplyEqual(arr, sortByStr(Object.keys(req.query))))
   ) {
-    res.json({
+    res.status(400).json({
       status: 400,
       message: 'This query parameters combination is not allowed.',
       allowedCombinations: POSSIBLE_COMBINATIONS,
@@ -98,7 +98,7 @@ const fetchFilter = async (req, res) => {
     .filter(Boolean);
 
   if (arrErrors.length) {
-    res.json({
+    res.status(400).json({
       status: 400,
       messages: arrErrors.map((error) => error.message.replace(/\n/gi, ' ').trim()),
     });
@@ -113,7 +113,7 @@ const fetchFilter = async (req, res) => {
 
   const [error, resolve] = await enhancedPromiseHandler(promise);
   if (error) {
-    res.json({
+    res.status(Number(error.response.status)).json({
       status: error.response.status,
       message: error.message,
     });
@@ -123,7 +123,7 @@ const fetchFilter = async (req, res) => {
 
   const arr = (await csv({ checkType: true }).fromString(resolve.data)).map(keep(...FORMAT_FIELDS));
 
-  res.json({
+  res.status(200).json({
     data: arr,
     status: 200,
   });
